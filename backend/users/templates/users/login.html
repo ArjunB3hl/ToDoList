@@ -1,0 +1,39 @@
+{% extends "users/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="error-message">
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="box">
+    <form id="login-form" method="POST">
+        {% csrf_token %}
+        <div class="user-fields">
+            {{form.username}}
+            <span class="bar"></span>
+        </div>
+        <div class="user-fields">
+            {{form.password}}
+            <span class="bar"></span>
+        </div>
+    </form>
+</div>
+<div class="buttons-box">
+    <div class="action-button">
+        <input type="submit" value="Login" form="login-form">
+    </div>
+    <div class="buttons">
+        <a class="person-add-button" href="{% url 'users_register' %}">
+            <span id="person_add" class="material-icons-round notranslate">person_add</span>
+        </a>
+        <a href="{% url 'tasks' %}">
+            <span id="home" class="material-icons-round notranslate">home</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+# This is a comment
+*.log       # Ignore all files with a .log extension
+*.pyc       # Ignore compiled python files
+.env        # Ignore the environment variable file
+venv/

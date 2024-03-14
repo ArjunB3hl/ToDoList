@@ -1,0 +1,36 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+<div id="box-form" class="box">
+    <form id="edit-form" method="POST">
+        {% csrf_token %}
+        <div class="user-fields">
+            {{form.title}}
+            <span class="bar"></span>
+        </div>
+        <div class="user-fields">
+            {{form.description}}
+            <span class="bar"></span>
+        </div>
+        <p class="created">
+            {% if request.user.is_authenticated %}
+                Created: {{task.date}}
+            {% else %}
+                Created: {{datetime|date:"M d, Y"}}
+            {% endif %}
+        </p>
+    </form>      
+</div>
+<div class="buttons-box">
+    <div class="action-button">
+        <input type="submit" value="Edit" form="edit-form">
+    </div>
+    <div class="buttons">
+        <a href="{% url 'tasks' %}">
+            <span id="home" class="material-icons-round notranslate">home</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

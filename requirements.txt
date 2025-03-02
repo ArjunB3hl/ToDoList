@@ -1,11 +1,11 @@
-asgiref==3.5.0
-dj-database-url==0.5.0
-Django>=4.00,<4.1.0
-gunicorn==20.1.0
-psycopg2==2.9.9
-python-decouple==3.6
-tzdata==2021.5
-whitenoise==6.0.0
-djangorestframework
-requests
-pyyaml
+asgiref>=3.8.1
+dj-database-url>=2.3.0
+Django>=5.1.6
+gunicorn>=20.1.0
+python-decouple>=3.8
+whitenoise>=6.9.0
+djangorestframework>=3.15.2
+requests>=2.32.3
+pyyaml>=6.0.2
+# psycopg2-binary is optional for PostgreSQL support
+# psycopg2-binary>=2.9.9

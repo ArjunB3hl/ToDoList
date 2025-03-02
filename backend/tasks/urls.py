@@ -6,4 +6,5 @@ urlpatterns = [
     path('tasks/add/', views.tasks_add, name='tasks_add'),
     path('tasks/edit/<slug:pk>/', views.tasks_edit, name='tasks_edit'),
     path('tasks/delete/<slug:pk>/', views.tasks_delete, name='tasks_delete'),
+    path('tasks/complete/<slug:pk>/', views.tasks_complete, name='tasks_complete'),
 ]

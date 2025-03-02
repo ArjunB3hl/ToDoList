@@ -1,36 +1,101 @@
 {% extends "tasks/base.html" %}
 
-{% block title %}Edit{% endblock %}
+{% block title %}TaskFlow - Edit Task{% endblock %}
 
 {% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <div id="box-form" class="box">
+    <h2 class="text-center mb-3">Edit Task</h2>
     <form id="edit-form" method="POST">
         {% csrf_token %}
-        <div class="user-fields">
-            {{form.title}}
-            <span class="bar"></span>
-        </div>
-        <div class="user-fields">
-            {{form.description}}
-            <span class="bar"></span>
-        </div>
-        <p class="created">
-            {% if request.user.is_authenticated %}
-                Created: {{task.date}}
-            {% else %}
-                Created: {{datetime|date:"M d, Y"}}
+        
+        <div class="form-group">
+            <label class="form-label" for="{{ form.title.id_for_label }}">Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <div class="error">{{ form.title.errors }}</div>
             {% endif %}
-        </p>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+            <div class="error">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="{{ form.priority.id_for_label }}">Priority</label>
+            {{ form.priority }}
+            {% if form.priority.errors %}
+            <div class="error">{{ form.priority.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="{{ form.status.id_for_label }}">Status</label>
+            {{ form.status }}
+            {% if form.status.errors %}
+            <div class="error">{{ form.status.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="{{ form.due_date.id_for_label }}">Due Date</label>
+            {{ form.due_date }}
+            {% if form.due_date.errors %}
+            <div class="error">{{ form.due_date.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="task-meta mt-3 mb-3">
+            <div class="task-meta-item">
+                <span class="material-icons-round notranslate">event_available</span>
+                {% if request.user.is_authenticated %}
+                    Created: {{task.created_date|date:"M d, Y"}}
+                {% else %}
+                    Created: {{datetime|date:"M d, Y"}}
+                {% endif %}
+            </div>
+            
+            {% if task.completed_date %}
+            <div class="task-meta-item status-completed">
+                <span class="material-icons-round notranslate">check_circle</span>
+                Completed: {{task.completed_date|date:"M d, Y"}}
+            </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">Update Task</button>
     </form>      
 </div>
+
 <div class="buttons-box">
     <div class="action-button">
-        <input type="submit" value="Edit" form="edit-form">
+        <a href="{% url 'tasks' %}" class="btn btn-sm">
+            <span class="material-icons-round notranslate">arrow_back</span>
+            Back to Tasks
+        </a>
     </div>
     <div class="buttons">
-        <a href="{% url 'tasks' %}">
-            <span id="home" class="material-icons-round notranslate">home</span>
+        <a href="{% url 'tasks_delete' task.task_id %}" class="btn btn-danger btn-sm">
+            <span class="material-icons-round notranslate">delete</span>
+            Delete
         </a>
+        {% if task.status != 'completed' %}
+        <a href="{% url 'tasks_complete' task.task_id %}" class="btn btn-success btn-sm">
+            <span class="material-icons-round notranslate">check_circle</span>
+            Mark Complete
+        </a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
